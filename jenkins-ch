@@ -6,16 +6,20 @@ pipeline {
             bat 'git clone %git-repo-url%'
         }
     }
-    stage('MUnit Test') {
-        steps {
-            bat '''cd %git-repo-name%
-                    mvn test'''
-        }
-    }
     stage('Maven Build') {
         steps {
             bat '''cd %git-repo-name%
                     mvn clean install'''
+        }
+    }
+    stage('Cloudhub Deployment') {
+        steps {
+
+            withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
+    bat '''cd %git-repo-name%
+                    mvn package deploy -DmuleDeploy -Dusername=%mule-username% -Dpassword=%mule-password%'''
+}
+            
         }
     }
  }
