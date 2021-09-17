@@ -3,10 +3,7 @@ pipeline {
  stages {
      stage('checkout') {
         steps {
-            bat '''echo %cd%
-                   echo %git-repo-name%
-                   echo %git-repo-url%
-                   echo %WORKSPACE%'''
+            bat 'git clone %git-repo-url%'
         }
     }
  }
