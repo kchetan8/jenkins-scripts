@@ -6,6 +6,12 @@ pipeline {
             bat 'git clone %git-repo-url%'
         }
     }
+    stage('MUnit Test') {
+        steps {
+            bat '''cd %git-repo-name%
+                    mvn test'''
+        }
+    }
     stage('Maven Build') {
         steps {
             bat '''cd %git-repo-name%
