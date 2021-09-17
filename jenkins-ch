@@ -1,4 +1,6 @@
 ws('C:\\tmp') {
+
+}
    pipeline {
     agent any
  stages {
@@ -11,6 +13,5 @@ ws('C:\\tmp') {
         }
     }
  }
-}
 }
 
