@@ -3,7 +3,7 @@ pipeline {
  stages {
      stage('Git Checkout') {
         steps {
-            git credentialsId: 'Githubpersonal8', url: '%git-repo-url%'
+            git credentialsId: 'Githubpersonal8', url: 'https://github.com/kchetan8/jenkins-demo-api.git'
         }
     }
     stage('Maven Build') {
