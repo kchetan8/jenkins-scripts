@@ -5,7 +5,8 @@ pipeline {
         steps {
             bat '''echo %cd%
                    cd %git-repo-name%
-                   echo %cd%'''
+                   echo %cd%
+                   echo %git-repo-url%'''
         }
     }
  }
