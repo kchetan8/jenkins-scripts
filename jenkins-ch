@@ -17,7 +17,7 @@ pipeline {
 
             withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
     bat '''cd %git-repo-name%
-                    mvn package deploy -DmuleDeploy -Dusername=%mule-username% -Dpassword=%mule-password%'''
+                    mvn package deploy -DmuleDeploy -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region%'''
 }
             
         }
