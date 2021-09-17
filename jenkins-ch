@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+ stages {
+     stage('checkout') {
+ 		steps {
+ 			bat 'git clone params.git-repo-url'
+ 		}
+ 	}
+ 	stage('build') {
+ 		steps {
+ 			bat 'mvn clean install'
+ 		}
+ 	}
+ 	stage('deploy') {
+ 		steps {
+ 			bat 'mvn package deploy -DmuleDeploy'
+ 		}
+ 	}
+ }
+}
