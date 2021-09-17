@@ -1,7 +1,4 @@
-ws('C:\\tmp') {
-
-}
-   pipeline {
+pipeline {
     agent any
  stages {
      stage('checkout') {
