@@ -3,7 +3,7 @@ pipeline {
  stages {
      stage('Git Checkout') {
         steps {
-            bat 'git clone %git-repo-url%'
+            git credentialsId: 'Githubpersonal8', url: 'params.git-repo-url' 
         }
     }
     stage('Maven Build') {
