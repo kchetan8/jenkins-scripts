@@ -1,12 +1,12 @@
 pipeline {
     agent any
  stages {
-     stage('checkout') {
+     stage('Git Checkout') {
         steps {
             bat 'git clone %git-repo-url%'
         }
     }
-    stage('checkout') {
+    stage('Maven Build') {
         steps {
             bat '''cd %git-repo-name%
                     mvn clean install'''
