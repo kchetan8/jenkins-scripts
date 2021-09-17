@@ -9,7 +9,7 @@ pipeline {
     stage('Maven Build') {
         steps {
             bat '''cd %git-repo-name%
-                    mvn clean install'''
+                    mvn clean install -DskipMunitTests'''
         }
     }
     stage('Cloudhub Deployment') {
@@ -17,7 +17,7 @@ pipeline {
 
             withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
     bat '''cd %git-repo-name%
-                    mvn package deploy -DmuleDeploy -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region%'''
+                    mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region%'''
 }
             
         }
