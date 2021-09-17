@@ -1,13 +1,16 @@
-pipeline {
+ws('C:\\tmp') {
+   pipeline {
     agent any
  stages {
      stage('checkout') {
         steps {
             bat '''echo %cd%
-                   cd %git-repo-name%
-                   echo %cd%
-                   echo %git-repo-url%'''
+                   echo %git-repo-name%
+                   echo %git-repo-url%
+                   echo %WORKSPACE%'''
         }
     }
  }
 }
+}
+
