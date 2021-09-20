@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    properties([parameters([string('git-repo-url')])])
+    options([parameters([string('git-repo-url')])])
  stages {
      stage('Git Checkout') {
         steps {
