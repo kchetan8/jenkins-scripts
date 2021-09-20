@@ -29,7 +29,7 @@ pipeline {
     stage('CH UAT Deployment'){
         steps {
         withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
-    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-uat -Dregion=%region% -Denvironment=UAT'''
+    bat '''mvn deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-uat -Dregion=%region% -Denvironment=UAT'''
 }
         }
         
