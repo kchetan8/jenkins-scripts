@@ -10,6 +10,18 @@ pipeline {
         steps {
             bat '''mvn clean install -DskipMunitTests'''
         }
+        post {
+             success {
+           emailext body: '''Hi
+Your build #%BUILD_NUMBER%
+Please check cloudhub logs''', subject: '%git-repo-name% #%BUILD_NUMBER% Build is deployed to Sandbox', to: 'sneha.kurnawal26@gmail.com'
+        }
+        failure {
+            emailext body: '''Hi
+Your build #%BUILD_NUMBER%
+Please check console logs at %BUILD_URL%''', subject: '%git-repo-name% #%BUILD_NUMBER% Build failed', to: 'kawadechetan8@gmail.com'
+        }
+        }
     }
     stage('CH Sandbox Deployment') {
         steps {
