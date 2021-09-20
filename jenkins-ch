@@ -3,21 +3,19 @@ pipeline {
  stages {
      stage('Git Checkout') {
         steps {
-            git credentialsId: 'Githubpersonal8', url: '${params.git-repo-url}' 
+            git credentialsId: 'Githubpersonal8', url: 'https://github.com/kchetan8/jenkins-demo-api.git' 
         }
     }
     stage('Maven Build') {
         steps {
-            bat '''cd %git-repo-name%
-            mvn clean install -DskipMunitTests'''
+            bat '''mvn clean install -DskipMunitTests'''
         }
     }
     stage('Cloudhub Deployment') {
         steps {
 
             withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
-    bat '''cd %git-repo-name%
-    mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region% -Denvironment=%environment%'''
+    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region% -Denvironment=%environment%'''
 }
             
         }
