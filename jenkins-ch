@@ -23,9 +23,6 @@ pipeline {
     stage('Deploy approval'){
         steps {
         input message: 'Deploy to UAT ?', ok: 'Approve'
-        withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
-    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-uat -Dregion=%region% -Denvironment=UAT'''
-}
         }
         
     }
