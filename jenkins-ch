@@ -35,5 +35,26 @@ pipeline {
         
     }
  }
+ post {
+        always {s
+            deleteDir() /* clean up our workspace */
+        }
+        success {
+           emailext body: '''Hi
+Your build #%BUILD_NUMBER%
+Please check cloudhub logs''', recipientProviders: [buildUser()], subject: '%git-repo-name% #%BUILD_NUMBER% Build is deployed', to: 'kawadechetan8@gmail.com'
+        }
+        unstable {
+            echo 'I am unstable :/'
+        }
+        failure {
+            emailext body: '''Hi
+Your build #%BUILD_NUMBER%
+Please check console logs at %BUILD_URL%''', recipientProviders: [buildUser()], subject: '%git-repo-name% #%BUILD_NUMBER% Build failed', to: 'kawadechetan8@gmail.com'
+        }
+        changed {
+            echo 'Things were different before...'
+        }
+    }
 }
 
