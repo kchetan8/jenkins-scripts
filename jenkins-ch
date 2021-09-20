@@ -20,6 +20,11 @@ pipeline {
             
         }
     }
+    stage('Deploy approval'){
+        input message: 'Deploy to UAT ?', ok: 'Approve', parameters: [booleanParam('approverName')], submitterParameter: 'params'
+        bat 'echo %approverName%'
+        bat 'echo params.approverName'
+    }
  }
 }
 
