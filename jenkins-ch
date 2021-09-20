@@ -11,23 +11,32 @@ pipeline {
             bat '''mvn clean install -DskipMunitTests'''
         }
     }
-    stage('Cloudhub Deployment') {
+    stage('CH Sandbox Deployment') {
         steps {
 
             withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
-    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name% -Dregion=%region% -Denvironment=%environment%'''
+    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-sandbox -Dregion=%region% -Denvironment=%environment%'''
 }
             
         }
     }
     stage('Deploy approval'){
         steps {
-        input message: 'Deploy to UAT ?', ok: 'Approve', parameters: [booleanParam('approverName')], submitterParameter: 'params'
-        bat 'echo %approverName%'
-        bat 'echo params.approverName'
+        input message: 'Deploy to UAT ?', ok: 'Approve'
+        withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
+    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-uat -Dregion=%region% -Denvironment=UAT'''
+}
         }
         
     }
+    stage('CH UAT Deployment'){
+        steps {
+        withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
+    bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-uat -Dregion=%region% -Denvironment=UAT'''
+}
+        }
+        
+    }s
  }
 }
 
