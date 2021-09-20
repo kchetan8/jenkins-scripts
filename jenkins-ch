@@ -1,10 +1,9 @@
 pipeline {
     agent any
-    options([parameters([string('git-repo-url')])])
  stages {
      stage('Git Checkout') {
         steps {
-            git credentialsId: 'Githubpersonal8', url: 'params.git-repo-url' 
+            git credentialsId: 'Githubpersonal8', url: '%git-repo-url%' 
         }
     }
     stage('Maven Build') {
