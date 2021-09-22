@@ -16,7 +16,7 @@ pipeline {
         steps {
 
             withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
-            bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-%version%-%environment% -Dregion=%region% -Denvironment=%environment% -Dworkers=%workers% -DworkerType=%worker-size% -Dapp.runtime=%mule-version% -Dmule.env=%mule.env%'''
+            bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-%version%-%environment% -Dregion=%region% -Denvironment=%environment% -Dworkers=%workers% -DworkerType=%worker-size% -Dapp.runtime=%mule-version% -Dmule.env=%mule.env% -Dmule.deploy=cloudhub'''
             
             }
             
