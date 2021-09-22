@@ -10,18 +10,18 @@ pipeline {
         steps {
             bat '''mvn clean install -DskipMunitTests'''
         }
-        post {
-             success {
-           emailext body: '''Hi
-Your build #%BUILD_NUMBER%
-Please check cloudhub logs''', subject: '%git-repo-name% #%BUILD_NUMBER% Build is deployed to Sandbox', to: 'sneha.kurnawal26@gmail.com'
+
+    }
+     stage('CH Sandbox Deployment') {
+        steps {
+
+            withCredentials([usernamePassword(credentialsId: 'Anypoint14', passwordVariable: 'mule-password', usernameVariable: 'mule-username')]) {
+            bat '''mvn package deploy -DmuleDeploy -DskipMunitTests -Dusername=%mule-username% -Dpassword=%mule-password% -Dapp.name=%app-name%-%version%-%environment% -Dregion=%region% -Denvironment=%environment% -Dworkers=%workers% -DworkerType=%worker-size% -Dapp.runtime=%mule-version% -Dmule.env=%mule.env%'''
+            
+            }
+            
         }
-        failure {
-            emailext body: '''Hi
-Your build #%BUILD_NUMBER%
-Please check console logs at %BUILD_URL%''', subject: '%git-repo-name% #%BUILD_NUMBER% Build failed', to: 'kawadechetan8@gmail.com'
-        }
-        }
+
     }
  }
 }
